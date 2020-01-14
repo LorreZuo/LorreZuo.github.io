@@ -2,12 +2,21 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://lorrezuo.github.io/</id>
     <title>LorreZuo</title>
-    <updated>2020-01-14T05:45:29.487Z</updated>
+    <updated>2020-01-14T06:05:14.989Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://lorrezuo.github.io/"/>
     <link rel="self" href="https://lorrezuo.github.io/atom.xml"/>
-    <subtitle>    的秘密小基地</subtitle>
+    <subtitle>&amp;emsp; &amp;emsp; &amp;emsp; 的秘密小基地</subtitle>
     <logo>https://lorrezuo.github.io/images/avatar.png</logo>
     <icon>https://lorrezuo.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, LorreZuo</rights>
+    <entry>
+        <title type="html"><![CDATA[2020冲鸭]]></title>
+        <id>https://lorrezuo.github.io/post/2020-chong-ya</id>
+        <link href="https://lorrezuo.github.io/post/2020-chong-ya">
+        </link>
+        <updated>2020-01-14T06:03:58.000Z</updated>
+        <content type="html"><![CDATA[<h5 id="2020给自己立几个flag巩固自己技能做培训课程写博客">2020给自己立几个FLAG，巩固自己技能，做培训课程，写博客。</h5>
+]]></content>
+    </entry>
 </feed>
