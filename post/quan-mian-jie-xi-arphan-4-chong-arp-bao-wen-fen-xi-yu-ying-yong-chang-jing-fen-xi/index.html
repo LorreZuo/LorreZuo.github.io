@@ -1,22 +1,114 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://lorrezuo.github.io/</id>
-    <title>LorreZuo</title>
-    <updated>2020-03-08T02:58:33.029Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://lorrezuo.github.io/"/>
-    <link rel="self" href="https://lorrezuo.github.io/atom.xml"/>
-    <subtitle>&amp;emsp; &amp;emsp; &amp;emsp; 的秘密小基地</subtitle>
-    <logo>https://lorrezuo.github.io/images/avatar.png</logo>
-    <icon>https://lorrezuo.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, LorreZuo</rights>
-    <entry>
-        <title type="html"><![CDATA[全面解析ARP（含4种ARP报文分析与应用场景分析）]]></title>
-        <id>https://lorrezuo.github.io/post/quan-mian-jie-xi-arphan-4-chong-arp-bao-wen-fen-xi-yu-ying-yong-chang-jing-fen-xi/</id>
-        <link href="https://lorrezuo.github.io/post/quan-mian-jie-xi-arphan-4-chong-arp-bao-wen-fen-xi-yu-ying-yong-chang-jing-fen-xi/">
-        </link>
-        <updated>2020-03-08T02:57:35.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="arp">ARP</h1>
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LorreZuo</title>
+<meta name="description" content="&emsp; &emsp; &emsp; 的秘密小基地" />
+<link rel="shortcut icon" href="https://lorrezuo.github.io//favicon.ico?v=1583636292807">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://lorrezuo.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="LorreZuo - Atom Feed" href="https://lorrezuo.github.io//atom.xml">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://lorrezuo.github.io/">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://lorrezuo.github.io//images/avatar.png?v=1583636292807" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">LorreZuo</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            文章目录
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#arp">ARP</a>
+<ul>
+<li><a href="#arp%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF">ARP的使用场景</a></li>
+<li><a href="#arp%E7%BC%93%E5%AD%98%E5%91%A8%E6%9C%9F">ARP缓存周期</a>
+<ul>
+<li><a href="#%E5%9C%A8windows%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%BC%93%E5%AD%98%E6%97%B6%E9%97%B4">在Windows平台上缓存时间：</a></li>
+<li><a href="#%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%BC%93%E5%AD%98%E6%97%B6%E9%97%B4">在Linux平台上缓存时间：</a></li>
+<li><a href="#%E5%9C%A8cisco-ios%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%BC%93%E5%AD%98%E6%97%B6%E9%97%B4">在Cisco IOS平台上缓存时间：</a></li>
+</ul>
+</li>
+<li><a href="#arp%E5%AE%9E%E7%8E%B0">ARP实现</a>
+<ul>
+<li><a href="#%E6%A0%87%E5%87%86arp%E5%AE%9E%E7%8E%B0">标准ARP实现</a></li>
+<li><a href="#rarp%E5%AE%9E%E7%8E%B0">RARP实现</a></li>
+<li><a href="#garp%E5%AE%9E%E7%8E%B0">GARP实现</a></li>
+<li><a href="#arp-proxy%E5%AE%9E%E7%8E%B0">ARP-proxy实现</a></li>
+</ul>
+</li>
+<li><a href="#%E5%A4%8D%E7%9B%98">复盘：</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></div>
+    <a class="rss" href="https://lorrezuo.github.io//atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">全面解析ARP（含4种ARP报文分析与应用场景分析）</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2020-03-08 / 21 min read
+        </div>
+        
+        <div class="post-content yue">
+          <h1 id="arp">ARP</h1>
 <p>ARP协议全名，Address Resolution Protocol （地址解析协议）<br>
 作用是将<strong>IP逻辑地址</strong>映射成<strong>MAC物理地址</strong><br>
 ARP的种类常见的有标准ARP，GARP（无故/免费ARP），RARP反向ARP，代理ARP。<br>
@@ -377,218 +469,130 @@ R4在ping通后的ARP表：<br>
 <p>RARP 是有自身的MAC地址，却没有自身的IPv4地址，发送广播请求，期待RARP服务器收到请求后，将自身所需的IPv4信息填充后，回复给这台没有IPv4地址的设备。</p>
 <p>GARP 主要是主动刷新IPv4子网段内其他设备的ARP缓存表信息。在同一个IPv4逻辑地址有多个MAC的时候（冗余HA环境下），起重大作用。</p>
 <p>ARP-proxy 则是通过监听ARP广播的请求，检索请求的地址是否在自身的IP路由表中，如果表内有目的IPv4的路由信息，则代替回复ARP请求。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Alpine安装和介绍]]></title>
-        <id>https://lorrezuo.github.io/post/alpine-an-zhuang-he-jie-shao/</id>
-        <link href="https://lorrezuo.github.io/post/alpine-an-zhuang-he-jie-shao/">
-        </link>
-        <updated>2020-02-25T04:00:08.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="alpine使用日记">alpine使用日记</h1>
-<p>下载alipine 镜像文件<br>
-<a href="https://www.alpinelinux.org/downloads/">官网</a></p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>特点</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>standard</td>
-<td>标准</td>
-</tr>
-<tr>
-<td>Extended</td>
-<td>拓展，适用于服务器和路由器</td>
-</tr>
-<tr>
-<td>NETBOOT</td>
-<td>适用于网络开启</td>
-</tr>
-<tr>
-<td>最小根文件系统</td>
-<td>用于容器和最小chroots</td>
-</tr>
-<tr>
-<td>虚拟化</td>
-<td>瘦下来的内核，针对虚拟化系统进行了优化</td>
-</tr>
-<tr>
-<td>XEN</td>
-<td>支持XEN hypervisor</td>
-</tr>
-<tr>
-<td>RASPBERRY PI</td>
-<td>包括RASPBERRY内核</td>
-</tr>
-<tr>
-<td>ARM版本</td>
-<td>包括uroot引导程序 支持armhf和aarch64</td>
-</tr>
-</tbody>
-</table>
-<h2 id="setup-alpine-进入到交互式安装模式">setup-alpine 进入到交互式安装模式</h2>
-<p>开机后登陆root账号，默认无密码<br>
-<strong>很重要，挂载之后，需要用该命令进行在硬盘上安装</strong><br>
-镜像站21是清华镜像站，38是上海交通大学镜像站<br>
-键盘选择us-&gt;us，<br>
-根据情况选择ip，dns，hostname等<br>
-然后是去选择Asia-&gt;Shanghai<br>
-安装openssh和NTP的client端<br>
-<strong>然后重点，选择分区安装，看硬盘挂在情况，默认sda，一定要选很重要</strong><br>
-然后键入<strong>sys</strong>进入硬盘安装，直至看到installation is complete，随后可以reboot，去掉CD/DVD(IDE)挂载。</p>
-<h2 id="apk包管理">apk包管理</h2>
-<p>alpine使用apk进行包管理，自动解决依赖关系</p>
-<pre><code>apk update
-//更新索引
-</code></pre>
-<p>update命令会从各个镜像源列表下载APKINDEX.tar.gz并存储到本地缓存，一般在/var/cache/apk/(Alpine在该目录下)、 /var/lib/apk/ 、/etc/apk/cache/下</p>
-<pre><code>apk add [packagename]
-//下载软件包，可选项
-//--no-cache 不缓存
-//--repository 指定仓库
-//--allow-untrusted 接受不受信的软件包
-</code></pre>
-<h3 id="官方镜像列表">官方镜像列表：</h3>
-<pre><code>官方镜像列表：http://rsync.alpinelinux.org/alpine/MIRRORS.txt镜像源配置
-</code></pre>
-<p>可以安装指定版本</p>
-<pre><code>apk add openssh=8.1_p1-r0
-apk add 'openssh&lt;8.1'
-apk add 'openssh&gt;8.0'
-//可以使用大于 等于 小于
-</code></pre>
-<p>移除软件，不是remove</p>
-<pre><code>apk del openssh
-//删除openssh
-</code></pre>
-<p>更新已安装的软件包</p>
-<pre><code>apk upgrade
-//更新软件和内核
-apk add --upgrade openssh
-//也可以单独更新指定软件
-</code></pre>
-<p>搜索软件包，支持通配符</p>
-<pre><code>apk search [packagename]
-//搜索软件包
-apk search -v [packagename]
-//搜索的同时查看描述
-</code></pre>
-<p>查看已经安装的软件包</p>
-<pre><code>apk info
-//查看已经安装的软包
-apk info -a openssh
-//列出完整端openssh的软件包信息
-apk info --who-owns /sbin/ifup
-//查询这个进程是哪个软件包安装的
-</code></pre>
-<h3 id="ssh服务注意事项">ssh服务注意事项</h3>
-<p>默认ssh不开启root登陆</p>
-<p>vi /etc/ssh/sshd_config找到#PermitRootLogin 更改为yes</p>
-<pre><code>sed -i &quot;s/#PermitRootLogin.*/PermitRootLogin yes/g&quot; /etc/ssh/sshd_config
-</code></pre>
-<h2 id="管理init系统">管理init系统</h2>
-<p>alpine通过OpenRCinit系统管理init</p>
-<pre><code>rc-update add docker [boot]
-//开机启动docker [boot等级]
-</code></pre>
-<pre><code>rc-status docker
-//查看运行等级
-</code></pre>
-<pre><code>rc-service docker start|stop|restart
-//服务管理，启动服务，停止服务，重启服务
-</code></pre>
-<p>alpine的运行等级</p>
-<ul>
-<li>default</li>
-<li>sysinit</li>
-<li>boot</li>
-<li>single</li>
-<li>reboot</li>
-<li>shutdown</li>
-</ul>
-<h2 id="alpine-设置ip">Alpine 设置IP</h2>
-<p><code>/etc/network/interfaces</code>是配置文件，重启网络服务是<code>/etc/init.d/networking restart</code>或<code>rc-service networking restart</code></p>
-<p>更改配置文件</p>
-<pre><code>vi /etc/network/interfaces
-auto lo
-iface lo inet loopback
 
-auto eth0
-iface eth0 net static 
-    address 172.16.0.1
-    netmask 255.255.255.0
-    gateway 172.16.0.254
-auto eth1
-iface eth1 net dhcp
-    hostname demo
-</code></pre>
-<h3 id="开启ipv6支持">开启IPv6支持</h3>
-<pre><code>modprobe
-//模块加载
-echo &quot;ipv6&quot; &gt;&gt;/etc/modules
-</code></pre>
-<h3 id="开启ipv6很重要">开启ipv6很重要</h3>
-<p>如果是自动获取的地址，记得开启RA 路由通告。</p>
-<pre><code>iface ethx inet manual
-pre-up echo 1 &gt; /proc/sys/net/ipv6/conf/ethx/accept_ra
-//在网卡开启前，开启RA路由通告（自动获取）
-</code></pre>
-<p>配置固定IPv6地址</p>
-<pre><code>iface ethx inet static
-    address 2001::2
-    netmask /64
-    gateway 2001::1
-    pre-up echo 0 &gt; /proc/sys/net/ipv6/ethx/accept_ra
-</code></pre>
-<p>debian系统，pre-up</p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>pre-up</td>
-<td>在网卡开启前的动作</td>
-</tr>
-<tr>
-<td>up</td>
-<td>启动时的动作</td>
-</tr>
-<tr>
-<td>post-up</td>
-<td>启动后的动作</td>
-</tr>
-<tr>
-<td>pre-down</td>
-<td>启动前的动作</td>
-</tr>
-<tr>
-<td>down</td>
-<td>启动时的动作</td>
-</tr>
-<tr>
-<td>post-down</td>
-<td>启动后的动作</td>
-</tr>
-</tbody>
-</table>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[2020冲鸭]]></title>
-        <id>https://lorrezuo.github.io/post/2020-chong-ya/</id>
-        <link href="https://lorrezuo.github.io/post/2020-chong-ya/">
-        </link>
-        <updated>2020-01-14T06:03:58.000Z</updated>
-        <content type="html"><![CDATA[<h5 id="flag">FLAG</h5>
-<p>2020给自己立几个FLAG，巩固自己技能，做培训课程，写博客。</p>
-]]></content>
-    </entry>
-</feed>
+        </div>
+
+        
+
+
+        <div class="flex justify-between py-8">
+          
+
+          
+            <div class="next-post">
+              <a href="https://lorrezuo.github.io/post/alpine-an-zhuang-he-jie-shao/">
+                <h3 class="post-title">
+                  Alpine安装和介绍
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+
+    <script src="https://lorrezuo.github.io//media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>
